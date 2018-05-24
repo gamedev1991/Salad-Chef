@@ -18,6 +18,9 @@ public class ThirdPersonUserControl : MonoBehaviour
 	public SpriteRenderer[] rawVegetableSprites;
 	public GameObject rawVegetableHUD;
 	public Color color_R,color_B,color_C,color_T,color_E,color_F;
+	public RectTransform rawVegetableHUDCanvas;
+	public bool isInsideVegetablePickUpZone;
+
     private void Start()
     {
         // get the third person character ( this should never be null due to require component )
@@ -28,7 +31,7 @@ public class ThirdPersonUserControl : MonoBehaviour
 
 	void Update()
 	{
-		if (this.tag.Equals ("Player 1")) {
+		if (this.tag.Equals ("Player 1") && isInsideVegetablePickUpZone) {
 			if (rawVegetables.Count <= 2) {
 				if (Input.GetKeyDown (KeyCode.R)) {
 					if (!rawVegetables.Contains ('R')) {
@@ -78,7 +81,7 @@ public class ThirdPersonUserControl : MonoBehaviour
 	}
 
 
-	void SetHUD()
+	public void SetHUD()
 	{
 		for (int i = 0; i < rawVegetableSprites.Length; i++) {
 			rawVegetableSprites [i].gameObject.SetActive(false);
@@ -130,4 +133,9 @@ public class ThirdPersonUserControl : MonoBehaviour
         // pass all parameters to the character control script
         m_Character.Move(m_Move);
     }
+
+	void LateUpdate()
+	{
+		rawVegetableHUDCanvas.localPosition = new Vector3 (this.transform.localPosition.x, rawVegetableHUDCanvas.localPosition.y, this.transform.localPosition.z);
+	}
 }

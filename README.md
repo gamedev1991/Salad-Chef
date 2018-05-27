@@ -20,5 +20,12 @@ Player 2 can server customers after reaching customer server zone by clicking on
 Note :Made vegetables RBCTEF as they would have otherwise conflicted with WASD.
 Also, kept all vegetables on both sides so that players don't collide with one another.
 
+Following Tasks Remain :
+Powerups :
+The above can be implemented by randomizing between 0 to 2 and selecting any random powerup to instantiate , which will have a collider but with the isTrigger Flag enabled , each Powerup object will have a PowerUp Script which will verify which Player can pick powerups with the help of tags. 
+Speed can be varied using the move speed multiplier variable of ThirdPersonCharacter script
+Time can be increased using the total time for playing variable of ThirdPersonUserControl script
+Score can be varied using the player score variable of ThirdPersonUserControl script
 
-
+LeaderBoard:
+I will keep an array of PlayerPrefs , saving them using key+i iterations , depending on the number of iterations , I will remove all the extra ones after sorting all of them via score variable in descending order

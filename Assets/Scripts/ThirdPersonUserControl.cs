@@ -12,34 +12,34 @@ public enum InputType {
 [RequireComponent(typeof (ThirdPersonCharacter))]
 public class ThirdPersonUserControl : MonoBehaviour
 {
-	public InputType inputType;
-	public List<char> rawVegetables;
-	public SpriteRenderer[] rawVegetableSprites;
-	public GameObject rawVegetableHUD;
-	public Color color_R,color_B,color_C,color_T,color_E,color_F;
+	public InputType inputType;//Select Input Type
+	public List<char> rawVegetables;//List of Vegetables Picked Up
+	public SpriteRenderer[] rawVegetableSprites;// Sprite of Vegetable in HUD
+	public GameObject rawVegetableHUD;// Vegetable HUD
+	public Color color_R,color_B,color_C,color_T,color_E,color_F;// Different Colors of Vegetables
 	public RectTransform rawVegetableHUDCanvas;
-	public bool isInsideVegetablePickUpZone;
-	public bool isNearDustbin;
-	public ChoppingBoard choppingBoard;
-	public string choppedVegetables;
-	public GameObject choppedVegetablesHUD;
-	public TextMesh choppedVegetablesText;
-	public Text playerScoreText;
-	public Text timerText;
-	public Dustbin dustbin;
+	public bool isInsideVegetablePickUpZone;// Checks whether near vegetables
+	public bool isNearDustbin;//Checks whether near dustbin
+	public ChoppingBoard choppingBoard;// Object of Chopping Board
+	public string choppedVegetables;//  String of Salad Combination
+	public GameObject choppedVegetablesHUD;// HUD to show salad combination
+	public TextMesh choppedVegetablesText;// Text for salad combination
+	public Text playerScoreText;//Player HUD SCore
+	public Text timerText;//Player HUD Timer
+	public Dustbin dustbin;// Object of Dustbin
 	[HideInInspector]
-	public int playerScore;
-	public float totalTimeForPlaying;
-	public bool isNearCustomer;
+	public int playerScore;// Variable to store score
+	public float totalTimeForPlaying;// Variable to store timer
+	public bool isNearCustomer;//Checks whether near customer
 	public CustomerManager customerManager;
-	public bool isCustomerAngry;
-	public bool isTimerOver;
+	public bool isCustomerAngry;//Checks whether customer is angry
+	public bool isTimerOver;// Checks whether timer is over
 
 	private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
 	private IEnumerator timerCoroutine;
-	private string sortedSaladCombination;
-	private int maxNumberOfVegetablesPlayerCanCarry = 2;
-	private int valuePerVegetable = 5;
+	private string sortedSaladCombination;// Final Salad combination
+	private int maxNumberOfVegetablesPlayerCanCarry = 2;// Limit of vegetables
+	private int valuePerVegetable = 5;// Score value per vegetable
 	private Vector3 m_Move;
 
     private void Start()
@@ -55,6 +55,7 @@ public class ThirdPersonUserControl : MonoBehaviour
 
 	void Update()
 	{
+		//Takes input for Player 1
 		if (this.tag.Equals ("Player 1") && isInsideVegetablePickUpZone) {
 			if (rawVegetables.Count < maxNumberOfVegetablesPlayerCanCarry) {
 				if (Input.GetKeyDown (KeyCode.R)) {
@@ -142,7 +143,7 @@ public class ThirdPersonUserControl : MonoBehaviour
 			}
 		}
 
-		if (this.tag.Equals ("Player 1") && isNearCustomer) {
+		if (this.tag.Equals ("Player 1") && isNearCustomer && !string.IsNullOrEmpty(choppedVegetables)) {
 			if (Input.GetKeyDown (KeyCode.Alpha1)) {
 				CheckOrder (0);
 			}else if (Input.GetKeyDown (KeyCode.Alpha2)) {
@@ -154,7 +155,9 @@ public class ThirdPersonUserControl : MonoBehaviour
 			}
 		}
 	}
-
+	/// <summary>
+	/// Puts the vegetables in dustbin.
+	/// </summary>
 	public void PutVegetablesInDustbin()
 	{
 		int numberOfVegetablesThrown = 0;
@@ -169,7 +172,9 @@ public class ThirdPersonUserControl : MonoBehaviour
 		choppedVegetablesHUD.SetActive (false);
 		choppedVegetables = "";
 	}
-
+	/// <summary>
+	/// Sets the HUD.
+	/// </summary>
 	public void SetHUD()
 	{
 		for (int i = 0; i < rawVegetableSprites.Length; i++) {
@@ -228,12 +233,17 @@ public class ThirdPersonUserControl : MonoBehaviour
 
 
     }
-
+	/// <summary>
+	/// Late update called after all physic and movement calculations.
+	/// </summary>
 	void LateUpdate()
 	{
 		rawVegetableHUDCanvas.localPosition = new Vector3 (this.transform.localPosition.x, rawVegetableHUDCanvas.localPosition.y, this.transform.localPosition.z);
 	}
-
+	/// <summary>
+	/// Runs the timer for the player.
+	/// </summary>
+	/// <returns>The timer.</returns>
 	IEnumerator RunTimer()
 	{
 		while (true) {
@@ -248,7 +258,10 @@ public class ThirdPersonUserControl : MonoBehaviour
 		}
 
 	}
-
+	/// <summary>
+	/// Checks the order whether the customer order and salad combination match.
+	/// </summary>
+	/// <param name="customerID">Customer I.</param>
 	public void CheckOrder(int customerID)
 	{
 		List<char> orderList = new List<char> ();

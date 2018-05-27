@@ -106,7 +106,7 @@ public class Customer : MonoBehaviour {
 	void OnMouseDown()
 	{
 		Debug.Log("Press Customer");
-		if (player2_ThirdPersonUserControl.isNearCustomer) {
+		if (player2_ThirdPersonUserControl.isNearCustomer && !string.IsNullOrEmpty(player2_ThirdPersonUserControl.choppedVegetables)) {
 			player2_ThirdPersonUserControl.CheckOrder (customerID-1);
 		}
 	}

@@ -10,18 +10,14 @@ public class CheckTrigger : MonoBehaviour {
 	{
 		if (isTriggerCheckForPickUp) {
 			thirdPersonUserControl.isInsideVegetablePickUpZone = true;
-		} else {
 		}
-		Debug.Log("Enable Trigger");
 	}
 
 	void OnTriggerExit()
 	{
 		if (isTriggerCheckForPickUp) {
 			thirdPersonUserControl.isInsideVegetablePickUpZone = false;
-		} else {
-		}
-		Debug.Log("Disable Trigger");
+		} 
 	}
 
 }
